@@ -1,23 +1,39 @@
 import pyperclip
+import requests
+import time
+
+start = input("This app will copy the link that you copied in your clipboard. Press ENTER to start")
+
+def its_valid(url):
+    try:
+        #Making some request 
+        response = requests.head(url)
+        #This returns  True if the request is 200 
+        return response.status_code == 200
+    except:
+        print("Invalid url")
+        return False 
 
 # Open a file in write mode
-with open("C:/Users/Sorin Chirtoaca/Desktop/Aurl2.txt"
-          , 'w') as file:
-    while True:
-        # Wait for user to copy text to the clipboard
-        input("Copy your link(s) to the clipboard, then press Enter to save: ")
-        
-        # Retrieve contents of the clipboard
-        clipboard_text = pyperclip.paste()
-        
-        # Write clipboard contents to the file
-        file.write(clipboard_text + '\n')
-        print("Link(s) saved to file!")
-        
-        # Ask the user if they want to continue or exit
-        response = input("Press Enter to continue or type 'exit' to quit: ")
-        if response.lower() == 'exit':
-            break
 
-# Close the file
-file.close()
+while True: 
+        # Open a file in write mode
+    file=open("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo/links.txt", 'a')
+    # Update the variable
+    url = pyperclip.paste()
+    if its_valid(url)==True:
+        # Write clipboard contents to the file
+        print(url)
+        file.write(url + '\n')
+        print("Link saved to file!")
+        file.close()
+        x=input("Press any button to continue or q to exit")
+            
+        if x=="q":
+            break
+        else:
+            pass
+
+    else:
+        print("Invalid link or unable to access link.")
+        break
