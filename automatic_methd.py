@@ -3,49 +3,41 @@ import requests
 import time
 import os 
 
-# This program will copy the link that you copied in your clipboard 
-# Also will save it into a namefile.txt 
-
-# Function that check if the url its valid
-def is_valid(url):
-    try:
-        # Making some request 
-        response = requests.head(url)
-        # This returns True if the request is 200 
-        return response.status_code == 200
-    except:
-        return False 
-
-# Function that check if the path exists 
-def exist_path(name_file):
-    #We join to obtain a correct path
-    file_path = os.path.join("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo" + name_file)
-    #Check if its exist
-    if os.path.exists(file_path):
-        return True
-    #Else we create  a file with write 
-    else:
-        with open(file_path, "w") as mainfile:
-            mainfile.close()
+class Automatic_method():
+    #This class make auto the copying  
+    
+    #This method checks if the url is valid
+    def is_valid(self, url):
+        try:
+            response = requests.head(url)
+            return response.status_code == 200
+        except:
+            return False 
+    
+    #This method checks if the path exist if not create a file  
+    def exist_path(self, name_file):
+        file_path = os.path.join("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo", name_file)
+        if os.path.exists(file_path):
             return True
-
-
-# Open a file in append  mode that allow me to save the last links 
-if exist_path("/links.txt")==True:
-        file=open("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo/links.txt", "a")
-url = pyperclip.paste()
-
-while True: 
-    url = pyperclip.paste()
-
-    # A condition that allows check if it's valid or not
-    if is_valid(url):
-        file.write(url + '\n')
-        print("Link saved to file!")
-    else:
-        print("Invalid link or unable to access link. Check it!")
+        else:
+            with open(file_path, "w") as mainfile:
+                mainfile.close()
+                return True
+    
+    # This method join the other 2 method
+    def execute(self, times):
+        if self.exist_path("links.txt"):
+            file = open("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo/links.txt", "a")
+        url = pyperclip.paste()
+        while True:
+            url = pyperclip.paste()
+            if self.is_valid(url):
+                file.write(url + "\n")
+                print("Link saved to file!")
+            else:
+                print("Invalid link or unable to access link. Check it!")
+            time.sleep(int(times))
         
-    # Introduce a delay of 5 seconds between each link paste operation
-    time.sleep(15)
+        file.close()
 
-    #####  Make a class with all of this  integrate  with menu 
+
