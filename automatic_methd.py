@@ -2,6 +2,7 @@ import pyperclip
 import requests
 import time
 import os 
+from os.path import realpath
 
 class Automatic_method():
     #This class make auto the copying  
@@ -16,7 +17,9 @@ class Automatic_method():
     
     #This method checks if the path exist if not create a file  
     def exist_path(self, name_file):
-        file_path = os.path.join("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo", name_file)
+        file_path = realpath(os.path.join("./Saved_photo", name_file))
+        file_path = file_path.replace("\\", "/")
+
         if os.path.exists(file_path):
             return True
         else:
@@ -27,7 +30,7 @@ class Automatic_method():
     # This method join the other 2 method
     def execute(self, times):
         if self.exist_path("links.txt"):
-            file = open("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo/links.txt", "a")
+            file = open(realpath("./Saved_photo/links.txt"), "a")
         url = pyperclip.paste()
         while True:
             url = pyperclip.paste()
@@ -39,5 +42,3 @@ class Automatic_method():
             time.sleep(int(times))
         
         file.close()
-
-

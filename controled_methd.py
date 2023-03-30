@@ -1,7 +1,8 @@
 import pyperclip
 import requests
 import time
-import os 
+import os
+from os.path import realpath
 
 #This program will copy the link that you copied in your clipboard 
 #Also will save it into a namefile.txt 
@@ -9,7 +10,7 @@ import os
 class Controled_method():
     
     def begin(self):
-        input("This app will copy the link that you copied in your clipboard. \n Press ENTER to start")
+        input("This app will copy the link that you copied in your clipboard. \nPress ENTER to start")
         self.run()
 
     def its_valid(self,url):
@@ -24,7 +25,8 @@ class Controled_method():
     #Function that check if the path exists 
     def exist_path(self,name_file):
         #We join to obtain a correct path
-        file_path = os.path.join("./Saved_photo" + name_file)
+        file_path = realpath(os.path.join("./Saved_photo", name_file))
+        file_path = file_path.replace("\\", "/")
         #Check if its exist
         if os.path.exists(file_path):
             return True
@@ -38,8 +40,11 @@ class Controled_method():
     def run(self):
         while True: 
             # Open a file in append  mode that allow me to save the last links 
-            if self.exist_path("./links.txt")==True:
-                file=open("C:/Users/Sorin Chirtoaca/Desktop/copi/Saved_photo/links.txt", "a")
+            if self.exist_path("links.txt")==True:
+                file_path = "./Saved_photo/links.txt"
+                file_path = file_path.replace("\\", "/")
+                
+                file=open(file_path, "a")
             url = pyperclip.paste()
             
             #A condition that allows check if its valid or no
@@ -57,5 +62,3 @@ class Controled_method():
             else:
                 print("Invalid link or unable to access link \n Check it !")
                 break
-
-
