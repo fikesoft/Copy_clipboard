@@ -3,6 +3,7 @@
 from automatic_methd import Automatic_method
 from controled_methd import Controled_method
 from automatic_method_2 import Automatic_method_new_file
+from dowland import Dowland
 
 #The question that slected the method of use 
 SELECTED_METHOD= '''
@@ -62,7 +63,8 @@ while True:
         control.run()
     
     if x=="3":
-        pass
+        cl=Dowland()
+        cl.run()
     
     if x=="0":
         break
